@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "@3-/ossput": "^0.1.13"
+  },
+  "type": "module"
+}
