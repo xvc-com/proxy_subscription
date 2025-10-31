@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "@3-/ossput": "^0.1.17",
+    "@3-/yml": "^0.1.12"
+  },
+  "type": "module"
+}
