@@ -1,0 +1,36 @@
+on:
+  workflow_call:
+    inputs:
+      name:
+        required: true
+        type: string
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+
+      - name: checkout private conf
+        uses: actions/checkout@v4
+        with:
+          repository: ${{github.repository_owner}}/${{github.event.repository.name}}_conf
+          # https://github.com/settings/tokens
+          token: ${{ secrets.GH_PAT }}
+          path: conf
+          branch: dev
+
+      - uses: oven-sh/setup-bun@v2
+
+      - name: ssh
+        run: |
+          set -ex
+          git config --global user.name "$(git log -1 --pretty=format:'%an')"
+          git config --global user.email "$(git log -1 --pretty=format:'%ae')"
+
+      - name: ${{inputs.name}}
+        run: |
+          bun i
+          ./main.js
